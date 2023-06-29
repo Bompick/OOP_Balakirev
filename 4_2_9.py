@@ -15,5 +15,6 @@ class SmartPhone(IteratorAttrs):
 phone = SmartPhone("GalaxyS10", "1980*720", '4Gb')
 for attr, value in phone:
     print(attr, value)
+    print()
 
 
