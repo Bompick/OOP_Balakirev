@@ -15,9 +15,9 @@ class Callback(Router):
         self.path = path
         self.route_cls = route_cls
 
-
     def __call__(self, func):
-        return  super().add_callback(self.path, func)
+        self.route_cls.add_callback(self.path, func)
+        return func
 
 
 @Callback('/about', Router)
