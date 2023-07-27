@@ -54,22 +54,28 @@ class LinkedGraph:
             for item in vertexes:
                 item.links.append(link)
 
-    def recurs(self, items, stop, to_exclude=[]):
+    def recurs(self, items, stop, path=[]):
         for item in items:
-            to_exclude.append(item)
+            path.append(item)
             all_smej_one_incl_item = list()
             for i in [x for row in [(val.v1, val.v2) for val in item.links] for x in row]:
                 if i not in all_smej_one_incl_item:
                     all_smej_one_incl_item.append(i)
-            all_smej_next = [j for j in all_smej_one_incl_item if j not in to_exclude]
+            all_smej_next = [j for j in all_smej_one_incl_item if j not in path]
             if stop not in all_smej_next:
                 self.recurs(all_smej_next, stop)
-            else:
-                to_return = to_exclude.append(stop)
-                yield to_return
+
+            print(f'im here: {item}')
+            print(path)
+            correct_route = path + [stop]
+            path.remove(item)
+            if stop in all_smej_next:
+                return correct_route
+
 
     def find_path(self, start_v, stop_v):
         ttl_routes = self.recurs([start_v], stop_v)
+        print(ttl_routes)
         a = list(ttl_routes)
         print(a)
 
