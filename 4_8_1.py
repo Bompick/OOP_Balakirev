@@ -66,18 +66,18 @@ class LinkedGraph:
                 self.recurs(all_smej_next, stop)
 
             print(f'im here: {item}')
-            print(path)
             correct_route = path + [stop]
+            print(correct_route)
             path.remove(item)
             if stop in all_smej_next:
                 return correct_route
 
-
     def find_path(self, start_v, stop_v):
-        ttl_routes = self.recurs([start_v], stop_v)
-        print(ttl_routes)
-        a = list(ttl_routes)
+        prom = self.recurs([start_v], stop_v)
+        print(prom)
+        a = list(prom)
         print(a)
+
 
 class Station(Vertex):
     def __init__(self, name):
