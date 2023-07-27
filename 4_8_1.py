@@ -54,7 +54,7 @@ class LinkedGraph:
             for item in vertexes:
                 item.links.append(link)
 
-    def recurs(self, items, stop, path=[]):
+    def recurs(self, items, stop, path=[], global_path=[]):
         for item in items:
             path.append(item)
             all_smej_one_incl_item = list()
@@ -64,19 +64,24 @@ class LinkedGraph:
             all_smej_next = [j for j in all_smej_one_incl_item if j not in path]
             if stop not in all_smej_next:
                 self.recurs(all_smej_next, stop)
-
-            print(f'im here: {item}')
+            # print(f'im here: {item}')
             correct_route = path + [stop]
-            print(correct_route)
+            # print(correct_route)
             path.remove(item)
             if stop in all_smej_next:
-                return correct_route
+                global_path.append(correct_route)
+
+        return global_path
 
     def find_path(self, start_v, stop_v):
-        prom = self.recurs([start_v], stop_v)
-        print(prom)
-        a = list(prom)
-        print(a)
+        # prom = self.recurs([start_v], stop_v)
+        # print(prom)
+        # a = list(prom)
+        # print(a)
+        ttl_routes = list()
+        ttl_routes.append(self.recurs([start_v], stop_v))
+        ttl_routes = ttl_routes[0]
+        return ttl_routes
 
 
 class Station(Vertex):
@@ -116,6 +121,10 @@ map_metro.add_link(LinkMetro(v2, v7, 5))
 map_metro.add_link(LinkMetro(v3, v4, 3))
 map_metro.add_link(LinkMetro(v5, v6, 3))
 
-print(len(map_metro._links))
-print(len(map_metro._vertex))
+# print(len(map_metro._links))
+# print(len(map_metro._vertex))
 path = map_metro.find_path(v1, v6)
+
+a = path
+print(a)
+print(v1.links)
