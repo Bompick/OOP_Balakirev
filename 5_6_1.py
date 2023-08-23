@@ -1,5 +1,6 @@
 from random import randint
 
+
 class Ship:
     def __init__(self, length, tp=1, x=None, y=None):
         self._x = x
@@ -29,7 +30,23 @@ class Ship:
         if ship is None:
             return True
 
-        pass  # прописать функцию
+        self.height_width()
+        ship.height_width()
+
+        if self._y > ship._height + 1 or self._height + 1 < ship._y \
+                or self._width + 1 < ship._x or self._x > ship._width + 1:
+            return True
+        else:
+            return False
+
+    def height_width(self):
+        if self._tp == 1:
+            self._height = self._y
+            self._width = self._x + self._length - 1
+
+        elif self._tp == 2:
+            self._height = self._y + self._length - 1
+            self._width = self._x
 
     def is_out_pole(self, size=10):
         if self._tp == 1:
@@ -38,8 +55,8 @@ class Ship:
             else:
                 return False
 
-        elif self._tp ==2:
-            if self._y + self._length <= size -1:
+        elif self._tp == 2:
+            if self._y + self._length <= size - 1:
                 return True
             else:
                 return False
@@ -63,22 +80,13 @@ class GamePole:
                        for j in range(i)]
 
         for number, ship in enumerate(self._ships):
-            temp_ships_list=[]
             while True:
-                x, y = [randint(0, self._size-1) for i in range(2)]
+                x, y = [randint(0, self._size - 1) for i in range(2)]
                 temp_ship = Ship(ship._length, ship._tp, x, y)
-                if temp_ship.is_out_pole():
-                    for t_sh in temp_ships_list:
-                        
-                    ship.set_start_coords(x,y)
+                if temp_ship.is_out_pole() and temp_ship.is_collide():
+                    ship.set_start_coords(x, y)
                     break
             print(f'My coords is {x, y}')
-
-            if number == 0:
-                pass
-
-
-
 
     def get_ships(self):
         return self._ships
@@ -94,8 +102,6 @@ class GamePole:
         return tuple(tuple(item) for item in self._pole)
 
 
-ship = Ship(4)
-pole = GamePole()
-pole.init()
-pole.show()
-
+sh1 = Ship(3, 2, 5, 3)
+sh2 = Ship(2, 2, 6, 6)
+print(sh1.is_collide(sh2))
