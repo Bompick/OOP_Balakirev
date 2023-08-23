@@ -1,5 +1,6 @@
 from random import randint
 
+
 class Ship:
     def __init__(self, length, tp=1, x=None, y=None):
         self._x = x
@@ -46,7 +47,10 @@ class Ship:
         if self._tp == 1:
             self._height = self._y
             self._width = self._x + self._length - 1
-
+# SIZE_GAME_POLE = 10
+#
+# pole = GamePole(SIZE_GAME_POLE)
+# pole.init()
         elif self._tp == 2:
             self._height = self._y + self._length - 1
             self._width = self._x
@@ -69,8 +73,7 @@ class GamePole:
     def __init__(self, size=10):
         self._size = size
         self._ships = []
-        self._pole = [[0 for i in range(self._size)]
-                      for j in range(self._size)]
+
 
     # def init(self):
     #     for i in range(1, 5):
@@ -86,10 +89,30 @@ class GamePole:
             while True:
                 x, y = [randint(0, self._size - 1) for i in range(2)]
                 temp_ship = Ship(ship._length, ship._tp, x, y)
-                if temp_ship.is_out_pole() and temp_ship.is_collide():
+                temp_ship.height_width()
+                if temp_ship.is_out_pole() and self.check_of_collision(temp_ship):
                     ship.set_start_coords(x, y)
+                    ship.height_width()
                     break
-            print(f'My coords is {x, y}')
+            print(f"My coords is {x, y},I'm {ship._cells}, tp={ship._tp}")
+
+    def check_of_collision(self, ship_for_check):
+        flot = [ship for ship in self._ships if ship._x and ship._y]
+        if len(flot) == 0:
+            return True
+
+        temp_lst = []
+        for boat in flot:
+            if ship_for_check.is_collide(boat):
+                temp_lst.append(boat)
+
+        if len(flot) == len(temp_lst):
+            return True
+        else:
+            return False
+
+
+
 
     def get_ships(self):
         return self._ships
@@ -98,11 +121,31 @@ class GamePole:
         pass
 
     def show(self):
-        for item in self._pole:
-            print(item)
+        self._pole = [[0 for i in range(self._size)]
+                      for j in range(self._size)]
+
+        for ship in self._ships:
+            if ship._tp == 1:
+                for i in range(len(ship._cells)):
+                    self._pole[ship._y][ship._x+i] += ship._cells[i]
+            elif ship._tp == 2:
+                pass  # ПИСАТЬ ТУТ!!!!!!!
+
+
+        for row in self._pole:
+            for item in row:
+                print(item, end=' ')
+            print()
 
     def get_pole(self):
         return tuple(tuple(item) for item in self._pole)
 
 
+
+SIZE_GAME_POLE = 10
+
+pole = GamePole(SIZE_GAME_POLE)
+pole.init()
+print()
+pole.show()
 
