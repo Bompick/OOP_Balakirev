@@ -1,6 +1,5 @@
 from random import randint
 
-
 class Ship:
     def __init__(self, length, tp=1, x=None, y=None):
         self._x = x
@@ -24,7 +23,11 @@ class Ship:
         return self._x, self._y
 
     def move(self, go):
-        pass  # прописать функцию
+        if self._is_move and self._tp == 1:
+            self._x += go
+        elif self._is_move and self._tp == 2:
+            self._y += go
+        self.height_width()
 
     def is_collide(self, ship=None):
         if ship is None:
@@ -102,6 +105,4 @@ class GamePole:
         return tuple(tuple(item) for item in self._pole)
 
 
-sh1 = Ship(3, 2, 5, 3)
-sh2 = Ship(2, 2, 6, 6)
-print(sh1.is_collide(sh2))
+
