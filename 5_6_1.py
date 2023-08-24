@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, choice
 
 
 class Ship:
@@ -59,27 +59,21 @@ class Ship:
     def is_out_pole(self, size=10):
         if self._tp == 1:
             if self._x + self._length <= size - 1:
-                return True
-            else:
                 return False
+            else:
+                return True
 
         elif self._tp == 2:
             if self._y + self._length <= size - 1:
-                return True
-            else:
                 return False
+            else:
+                return True
 
 
 class GamePole:
     def __init__(self, size=10):
         self._size = size
         self._ships = []
-
-
-    # def init(self):
-    #     for i in range(1, 5):
-    #         temp = [Ship(5-i, tp=randint(1, 2)) for j in range(i)]
-    #         self._ships.extend(temp)
 
     def init(self):
         self._ships = [Ship(5 - i, tp=randint(1, 2))
@@ -91,12 +85,11 @@ class GamePole:
                 x, y = [randint(0, self._size - 1) for i in range(2)]
                 temp_ship = Ship(ship._length, ship._tp, x, y)
                 temp_ship.height_width()
-                if temp_ship.is_out_pole() and self.check_of_collision(temp_ship):
+                if not temp_ship.is_out_pole() and self.check_of_collision(temp_ship):
                     ship.set_start_coords(x, y)
                     ship.height_width()
                     break
             print(f"My coords is {x, y},I'm {ship._cells}, tp={ship._tp}")
-
 
     def check_of_collision(self, ship_for_check):
         flot = [ship for ship in self._ships if ship._x is not None and ship._y is not None]
@@ -113,21 +106,58 @@ class GamePole:
         else:
             return False
 
-
     def get_ships(self):
         return self._ships
 
     def move_ships(self):
-        pass
+        for num, ship in enumerate(self._ships):
+            temp_ship = Ship(ship._length, ship._tp, ship._x, ship._y)
+            temp_ship.height_width()
+            directions = [-1, 1]
+            dir = choice(directions)
+            directions.remove(dir)
+            temp_ship.move(dir)
+
+            if not temp_ship.is_out_pole() and self.check_for_collision_2(temp_ship, num):
+                print("Можно перемещать")
+
+    def check_for_collision_2(self, ship_for_check, number):
+        flot = [ship for num, ship in enumerate(self._ships) if num != number]
+        temp_lst = []
+        for boat in flot:
+            if not ship_for_check.is_collide(boat):
+                temp_lst.append(boat)
+
+        if len(flot) == len(temp_lst):
+            return True
+        else:
+            return False
+
+
 
     def show(self):
-        self.create_pole()
-        for row in self._pole:
+        # self.create_pole()
+        data = self.get_pole()
+        for row in data:
             for item in row:
                 print(item, end=' ')
             print()
         self._pole = None
-    def create_pole(self):
+    # def create_pole(self):
+    #     self._pole = [[0 for i in range(self._size)]
+    #                   for j in range(self._size)]
+    #
+    #     for ship in self._ships:
+    #         if ship._tp == 1:
+    #             for i in range(len(ship._cells)):
+    #                 self._pole[ship._y][ship._x+i] += ship._cells[i]
+    #         elif ship._tp == 2:
+    #             for i in range(len(ship._cells)):
+    #                 self._pole[ship._y+i][ship._x] += ship._cells[i]
+
+
+
+    def get_pole(self):
         self._pole = [[0 for i in range(self._size)]
                       for j in range(self._size)]
 
@@ -139,20 +169,15 @@ class GamePole:
                 for i in range(len(ship._cells)):
                     self._pole[ship._y+i][ship._x] += ship._cells[i]
 
-
-
-    def get_pole(self):
         return tuple(tuple(item) for item in self._pole)
 
-
-# ship1=Ship(4,1,0,6)
-# ship2=Ship(2,1,1,6)
-# print(ship1.is_collide(ship2))
 
 SIZE_GAME_POLE = 10
 
 pole = GamePole(SIZE_GAME_POLE)
 pole.init()
-print()
 pole.show()
 
+pole.move_ships()
+print()
+pole.show()
