@@ -89,7 +89,7 @@ class GamePole:
                     ship.set_start_coords(x, y)
                     ship.height_width()
                     break
-            print(f"My coords is {x, y},I'm {ship._cells}, tp={ship._tp}")
+
 
     def check_of_collision(self, ship_for_check):
         flot = [ship for ship in self._ships if ship._x is not None and ship._y is not None]
@@ -123,17 +123,15 @@ class GamePole:
             if not temp_ship.is_out_pole() and self.check_for_collision_2(temp_ship, num):
                 ship.set_start_coords(temp_ship._x, temp_ship._y)
                 ship.height_width()
-                print(f'я переместился {dir}')
+                # print(f'я переместился {dir}')
 
             else:
                 temp_ship2.move(directions[0])
                 if not temp_ship.is_out_pole() and self.check_for_collision_2(temp_ship, num):
                     ship.set_start_coords(temp_ship._x, temp_ship._y)
                     ship.height_width()
-                    print(f'переместился в {directions[0]}')
                 else:
-                    print('остался на месте')
-
+                    pass
 
     def check_for_collision_2(self, ship_for_check, number):
         flot = [ship for num, ship in enumerate(self._ships) if num != number]
@@ -155,19 +153,6 @@ class GamePole:
                 print(item, end=' ')
             print()
         self._pole = None
-    # def create_pole(self):
-    #     self._pole = [[0 for i in range(self._size)]
-    #                   for j in range(self._size)]
-    #
-    #     for ship in self._ships:
-    #         if ship._tp == 1:
-    #             for i in range(len(ship._cells)):
-    #                 self._pole[ship._y][ship._x+i] += ship._cells[i]
-    #         elif ship._tp == 2:
-    #             for i in range(len(ship._cells)):
-    #                 self._pole[ship._y+i][ship._x] += ship._cells[i]
-
-
 
     def get_pole(self):
         self._pole = [[0 for i in range(self._size)]
@@ -184,18 +169,6 @@ class GamePole:
         return tuple(tuple(item) for item in self._pole)
 
 
-# SIZE_GAME_POLE = 10
-#
-# pole = GamePole(SIZE_GAME_POLE)
-# pole.init()
-# pole.show()
-#
-# pole.move_ships()
-# print()
-# pole.show()
-# # ship1  = Ship(3,1,0,9)
-# # ship1.move(-1)
-# # print('1')
 
 ship = Ship(2)
 ship = Ship(2, 1)
@@ -204,6 +177,7 @@ ship = Ship(3, 2, 0, 0)
 assert ship._length == 3 and ship._tp == 2 and ship._x == 0 and ship._y == 0, "неверные значения атрибутов объекта класса Ship"
 assert ship._cells == [1, 1, 1], "неверный список _cells"
 assert ship._is_move, "неверное значение атрибута _is_move"
+
 ship.set_start_coords(1, 2)
 assert ship._x == 1 and ship._y == 2, "неверно отработал метод set_start_coords()"
 assert ship.get_start_coords() == (1, 2), "неверно отработал метод get_start_coords()"
@@ -214,7 +188,8 @@ s2 = Ship(3, 2, 0, 0)
 s3 = Ship(3, 2, 0, 2)
 
 assert s1.is_collide(s2), "неверно работает метод is_collide() для кораблей Ship(4, 1, 0, 0) и Ship(3, 2, 0, 0)"
-assert s1.is_collide(s3) == False, "неверно работает метод is_collide() для кораблей Ship(4, 1, 0, 0) и Ship(3, 2, 0, 2)"
+assert s1.is_collide(
+    s3) == False, "неверно работает метод is_collide() для кораблей Ship(4, 1, 0, 0) и Ship(3, 2, 0, 2)"
 
 s2 = Ship(3, 2, 1, 1)
 assert s1.is_collide(s2), "неверно работает метод is_collide() для кораблей Ship(4, 1, 0, 0) и Ship(3, 2, 1, 1)"
