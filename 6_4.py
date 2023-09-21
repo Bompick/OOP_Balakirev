@@ -15,5 +15,6 @@ class Women(metaclass=Meta):
     content = 'контент'
     photo = 'путь к фото'
 
+
 w = Women()
 print(w.__dict__)
