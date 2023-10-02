@@ -21,14 +21,21 @@ class AppStore:
     def total_apps(self):
         return len(self.vault)
 
+
+
 store = AppStore()
 app_youtube = Application("Youtube")
-app_instagram = Application("Instagram")
-app_VK = Application("VK")
+assert app_youtube.blocked == False, "начальное значение blocked должно быть равно False"
+
 store.add_application(app_youtube)
-store.add_application(app_instagram)
-store.add_application(app_VK)
-store.remove_application(app_instagram)
+store.block_application(app_youtube)
 
+assert app_youtube.name == "Youtube" and app_youtube.blocked == True, "неверные значения локальных атрибутов объекта класса Application"
 
-store.block_application(app_VK)
+app_stepik = Application("Stepik")
+store.add_application(app_stepik)
+
+assert store.total_apps() == 2, "неверное число приложений в магазине"
+
+store.remove_application(app_youtube)
+assert store.total_apps() == 1, "неверное число приложений в магазине, некорректно работает метод remove_application"
