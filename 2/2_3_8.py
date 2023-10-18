@@ -73,3 +73,5 @@ a.st = "dапарпаропропропропр"
 assert a.st == "hello", "дескриптор StringValue сохранил строку длиной больше max_length"
 a.st = "dапарпароп"
 assert a.st == "dапарпароп", "дескриптор StringValue сохранил строку длиной больше max_length"
+
+print()

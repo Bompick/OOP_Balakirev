@@ -54,3 +54,5 @@ except TypeError:
     assert True
 else:
     assert False, "не сгенерировалось исключение TypeError"
+
+
