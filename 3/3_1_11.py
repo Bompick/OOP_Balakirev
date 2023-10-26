@@ -70,6 +70,8 @@ class GeyserClassic:
             return False
 
 
+
+"""Test:"""
 my_water = GeyserClassic()
 my_water.add_filter(1, Mechanical(time.time()))
 my_water.add_filter(2, Aragon(time.time()))
