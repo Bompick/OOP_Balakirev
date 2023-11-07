@@ -42,8 +42,8 @@ class Triangle:
         return math.sqrt(p * (p - self.a) * (p - self.b) * (p - self.c))
 
 
-tr = Triangle(5, 4, 3)
-assert tr.a == 5 and tr.b == 4 and tr.c == 3, "дескрипторы вернули неверные значения"
+tr = Triangle(3, 4, 5)
+assert tr.a == 3 and tr.b == 4 and tr.c == 5, "дескрипторы вернули неверные значения"
 
 try:
     tr = Triangle(-5, 4, 3)
