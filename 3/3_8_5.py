@@ -40,11 +40,26 @@ class Integer:
             return True
 
 
+a = Array(20, cell=Integer)
+assert a[18] == 0, "начальные значения в ячейках массива (в объектах класса Integer) должны быть равны 0"
 
-ar_int = Array(10, cell=Integer)
-print(ar_int[3])
-ar_int[1] = 10
-print(ar_int)
-ar_int[10] = 1
+a = Array(2, cell=Integer)
+a[0] = 1
+a[1] = 2
+assert str(a) == "1 2", "функция str(a) для объекта класса Array вернула неверное значение"
+assert a[0] == 1 and a[1] == 2, "некорректно работает запись и/или считывание значений из массива по индексу"
 
+try:
+    a[1] = 2.5
+except ValueError:
+    assert True
+else:
+    assert False, "не сгенерировалось исключение ValueError"
+
+try:
+    a[100] = 25
+except IndexError:
+    assert True
+else:
+    assert False, "не сгенерировалось исключение IndexError"
 
