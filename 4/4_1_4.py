@@ -27,4 +27,3 @@ m = tb.model
 color = rt.color
 rt.set_model_and_color('Home', 'red')
 rt.set_params('Home', 'red', 700, 1000)
-h = tb.height
